@@ -26,8 +26,9 @@ export default function HeroCanvas() {
 
     // Caustic gradient background plane
     const planeGeo = new THREE.PlaneGeometry(40, 24)
+    const uTimeUniform: THREE.IUniform<number> = { value: 0 }
     const planeMat = new THREE.ShaderMaterial({
-      uniforms: { uTime: { value: 0 } },
+      uniforms: { uTime: uTimeUniform },
       vertexShader: `
         varying vec2 vUv;
         void main() {
@@ -104,7 +105,7 @@ export default function HeroCanvas() {
 
     const animate = () => {
       const elapsed = clock.getElapsedTime()
-      planeMat.uniforms.uTime.value = elapsed
+      uTimeUniform.value = elapsed
 
       const pos = particleGeo.attributes.position as THREE.BufferAttribute
       for (let i = 0; i < particleCount; i++) {
